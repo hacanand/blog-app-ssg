@@ -1,4 +1,5 @@
 import { CMS_NAME } from "../lib/constants";
+import {SearchInput} from "./searchBar";
 
 export function Intro() {
   return (
@@ -7,8 +8,7 @@ export function Intro() {
         Blog.
       </h1>
       <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
-        A statically generated blog example using Next.js
-        and {CMS_NAME}.
+        <SearchInput/>
       </h4>
     </section>
   );

@@ -9,10 +9,9 @@ export default function Search() {
   const [active, setActive] = useState(false);
   const [results, setResults] = useState([]);
 
-  const searchEndpoint = (query) =>
-  console.log(query)
-  {
-    searchData(query)
+  const searchEndpoint = (query) => {
+ 
+    return searchData(query)
   }
   console.log(query)
   console.log(results)
@@ -55,7 +54,7 @@ export default function Search() {
           {results.map(({ id, title }) => (
             <li className={styles.result} key={id}>
               <Link href="/posts/[id]" as={`/posts/${id}`}>
-                <a>{title}</a>
+                <>{id}</>
               </Link>
             </li>
           ))}

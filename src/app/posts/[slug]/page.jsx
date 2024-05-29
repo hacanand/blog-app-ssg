@@ -43,7 +43,7 @@ export function generateMetadata({ params } ) {
     return notFound();
   }
 
-  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`;
+  const title = `${post.title} | Next.js Blog Example with  `;
 
   return {
     title,

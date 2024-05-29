@@ -1,6 +1,6 @@
 import {posts} from './data';
 export const searchData = (query) => {
-console.log(query)
+// console.log(query)
   return posts.filter((post) =>
   {
     // console.log(post.id.toLowerCase().includes(query.toLowerCase()))

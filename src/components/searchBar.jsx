@@ -40,7 +40,7 @@ export default function Search() {
   }, []);
 
   return (
-    <div className={styles.container} ref={searchRef}>
+    <div className={`${styles.container} w-full `}ref={searchRef}>
       <input
         className= {`${styles.search} rounded-md`}
         onChange={onChange}

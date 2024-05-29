@@ -1,50 +1,66 @@
 'use client'
-import { useRouter } from "next/navigation";
-import { useState } from "react";
- 
+import { useCallback, useRef, useState } from "react";
+import Link from "next/link";
+import styles from "./search.module.css";
+import {searchData} from '../lib/searchData'
+export default function Search() {
+  const searchRef = useRef(null);
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState(false);
+  const [results, setResults] = useState([]);
 
-export const SearchInput = ({ defaultValue }) => {
-  // initiate the router from next/navigation
+  const searchEndpoint = (query) =>
+  console.log(query)
+  {
+    searchData(query)
+  }
+  console.log(query)
+  console.log(results)
+ console.log(searchEndpoint('dynamic-routing'))
+  const onChange = useCallback((event) => {
+    const querySearch = event.target.value;
+     console.log(querySearch)
+    setQuery(querySearch);
+    if (querySearch.length) {
+      setResults(searchEndpoint(querySearch));
+    } else {
+      setResults([]);
+    }
+  }, []);
 
-  const router = useRouter();
+  const onFocus = useCallback(() => {
+    setActive(true);
+    window.addEventListener("click", onClick);
+  }, []);
 
-  // We need to grab the current search parameters and use it as default value for the search input
-
-  const [inputValue, setValue] = useState(defaultValue);
-
-  const handleChange = (event ) => {
-    const inputValue = event.target.value;
-
-    setValue(inputValue);
-  };
-
-  // If the useSearchInputr clicks enter on the keyboard, the input value should be submitted for search
-
-  // We are now routing the search results to another page but still on the same page
-
-  const handleSearch = () => {
-    if (inputValue) return router.push(`/?q=${inputValue}`);
-
-    if (!inputValue) return router.push("/");
-  };
-
-  const handleKeyPress = (event ) => {
-    if (event.key === "Enter") return handleSearch();
-  };
+  const onClick = useCallback((event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setActive(false);
+      window.removeEventListener("click", onClick);
+    }
+  }, []);
 
   return (
-    <div className="search__input border-[2px] border-solid border-slate-500 flex flex-row items-center gap-5 p-1 rounded-[15px]">
-      <label htmlFor="inputId" className=" text-nowrap">Search Title</label>
-
+    <div className={styles.container} ref={searchRef}>
       <input
+        className= {`${styles.search} rounded-md`}
+        onChange={onChange}
+        onFocus={onFocus}
+        placeholder="Search posts"
         type="text"
-        id="inputId"
-        placeholder="Enter your keywords"
-        value={inputValue ?? ""}
-        onChange={handleChange}
-        onKeyDown={handleKeyPress}
-        className="bg-[transparent] outline-none border-none w-full py-3 pl-2 pr-3"
+        value={query}
       />
+      {active && results?.length > 0 && (
+        <ul className={styles.results}>
+          {results.map(({ id, title }) => (
+            <li className={styles.result} key={id}>
+              <Link href="/posts/[id]" as={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
+}

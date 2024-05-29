@@ -10,15 +10,15 @@ export default function Search() {
   const [results, setResults] = useState([]);
 
   const searchEndpoint = (query) => {
- 
+    // console.log(query)
     return searchData(query)
   }
-  console.log(query)
-  console.log(results)
- console.log(searchEndpoint('dynamic-routing'))
+  // console.log(query)
+  // console.log(results)
+//  console.log(searchEndpoint('dynamic-routing'))
   const onChange = useCallback((event) => {
     const querySearch = event.target.value;
-     console.log(querySearch)
+    //  console.log(querySearch)
     setQuery(querySearch);
     if (querySearch.length) {
       setResults(searchEndpoint(querySearch));
@@ -54,7 +54,7 @@ export default function Search() {
           {results.map(({ id, title }) => (
             <li className={styles.result} key={id}>
               <Link href="/posts/[id]" as={`/posts/${id}`}>
-                <>{id}</>
+                <>{title}</>
               </Link>
             </li>
           ))}

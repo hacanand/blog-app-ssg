@@ -25,7 +25,8 @@
 .result {
   background: #0070f3;
   color: #eee;
-  margin: 0 0 9px;
+  margin: 0 0 4px;
+  border-radius: 5px;
   padding: 18px;
 }
 
